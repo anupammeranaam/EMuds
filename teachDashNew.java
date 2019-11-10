@@ -288,22 +288,6 @@ public class teachDashNew {
 
 				btnBack.setVisible(true);
 
-				String[] columnNamesS = {"ID","Name","Status"};
-				Object[][] dataS = {
-						{"Joel", "Hails","P"},	
-						{"John", "Doe","A"},
-						{"Sue", "well","P"},
-						{"Jane","White","A"},
-
-				};
-
-				atnTabS = new JTable(dataS,columnNamesS);
-				atnTabS.setBounds(400,70,300,260);
-				atnScrollS.setViewportView(atnTabS);
-
-				atnTabS.setVisible(false);
-				atnScrollS.setVisible(false);
-
 				lblStatusS.setVisible(false);
 				tfAtnS.setVisible(false);
 			}
@@ -349,14 +333,13 @@ public class teachDashNew {
 
 		btnCc1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
-			{
-				atnScrollS.setVisible(true);
-				atnTabS.setVisible(true);	
-
+			{	
 				if(choiceAtnS == 2)
 				{		
 					lblStatusS.setVisible(true);
 					tfAtnS.setVisible(true);
+					atnScrollS.setVisible(true);
+					atnTabS.setVisible(true);
 
 					atnMatS = new boolean[4][1];
 
@@ -390,21 +373,18 @@ public class teachDashNew {
 					});
 
 				}
-
-
 			}
 		});
 
 		btnCc2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				atnScrollS.setVisible(true);
-				atnTabS.setVisible(true);
-
 				if(choiceAtnS == 2)
 				{		
 					lblStatusS.setVisible(true);
 					tfAtnS.setVisible(true);
+					atnScrollS.setVisible(true);
+					atnTabS.setVisible(true);
 
 					atnMatS = new boolean[4][1];
 
@@ -436,6 +416,7 @@ public class teachDashNew {
 								System.out.println("Invalid Status");
 						}
 					});
+
 				}	
 			}		
 		});
@@ -443,16 +424,15 @@ public class teachDashNew {
 		btnCc3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				atnScrollS.setVisible(true);
-				atnTabS.setVisible(true);
-
 				if(choiceAtnS == 2)
 				{		
 					lblStatusS.setVisible(true);
 					tfAtnS.setVisible(true);
-					
+					atnScrollS.setVisible(true);
+					atnTabS.setVisible(true);
+
 					atnMatS = new boolean[4][1];
-					
+
 					tfAtnS.addActionListener(new ActionListener(){
 						public void actionPerformed(ActionEvent cl)
 						{
@@ -481,6 +461,7 @@ public class teachDashNew {
 								System.out.println("Invalid Status");
 						}
 					});
+
 				}
 			}
 		});
@@ -488,15 +469,15 @@ public class teachDashNew {
 		btnCc4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				atnScrollS.setVisible(true);
-				atnTabS.setVisible(true);
 				if(choiceAtnS == 2)
 				{		
 					lblStatusS.setVisible(true);
 					tfAtnS.setVisible(true);
-					
+					atnScrollS.setVisible(true);
+					atnTabS.setVisible(true);
+
 					atnMatS = new boolean[4][1];
-					
+
 					tfAtnS.addActionListener(new ActionListener(){
 						public void actionPerformed(ActionEvent cl)
 						{
@@ -525,22 +506,23 @@ public class teachDashNew {
 								System.out.println("Invalid Status");
 						}
 					});
-				}
+
+				}//end of if
 			}
 		});
 
 		btnCc5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				atnScrollS.setVisible(true);
-				atnTabS.setVisible(true);
 				if(choiceAtnS == 2)
 				{		
 					lblStatusS.setVisible(true);
 					tfAtnS.setVisible(true);
-					
+					atnScrollS.setVisible(true);
+					atnTabS.setVisible(true);
+
 					atnMatS = new boolean[4][1];
-					
+
 					tfAtnS.addActionListener(new ActionListener(){
 						public void actionPerformed(ActionEvent cl)
 						{
@@ -569,6 +551,7 @@ public class teachDashNew {
 								System.out.println("Invalid Status");
 						}
 					});
+
 				}
 			}
 		});
@@ -576,16 +559,17 @@ public class teachDashNew {
 		btnCc6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				atnScrollS.setVisible(true);
-				atnTabS.setVisible(true);
 				if(choiceAtnS == 2)
 				{		
 					lblStatusS.setVisible(true);
 					tfAtnS.setVisible(true);
-					
+					atnScrollS.setVisible(true);
+					atnTabS.setVisible(true);
+
 					atnMatS = new boolean[4][1];
-					
-					tfAtnS.addActionListener(new ActionListener(){
+
+					tfAtnS.addActionListener(new ActionListener()
+					{
 						public void actionPerformed(ActionEvent cl)
 						{
 
@@ -976,24 +960,7 @@ public class teachDashNew {
 		btnViewAtnT.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				tfAbPtT.setVisible(false);
-				lblTeacherStatus.setVisible(false);
-
-				String[] columnNames = {"ID","Name","Status"};
-				Object[][] data = {
-						{"Joel", "Hails","P"},	
-						{"John", "Doe","A"},
-						{"Sue", "well","P"},
-						{"Jane","White","A"},
-
-				};
-
-				JTable atnTTab=new JTable(data,columnNames);
-				atnTTab.setBounds(100,100,100,100);	
-				atnScrollT.setViewportView(atnTTab);
-
-				atnScrollT.setVisible(true);
-				atnTTab.setVisible(true);
+				
 			}
 		});
 
