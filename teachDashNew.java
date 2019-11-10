@@ -5,8 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import java.awt.BorderLayout;
-import java.awt.SystemColor;
+
 import java.awt.Color;
 
 import javax.swing.JLabel;
@@ -14,10 +13,14 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+
 import javax.swing.JScrollPane;
-import javax.swing.JList;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.JTable;
+
 
 
 public class teachDashNew {
@@ -50,7 +53,16 @@ public class teachDashNew {
 	private JPasswordField OldPass;
 	private JPasswordField NewPass;
 	private JPasswordField ConfirmPass;
-
+	private JTextField tfAbPtT;
+	static int countIdT = 0;
+	static int yBoundT = 57;
+	private JTable atnTabS;
+	static boolean atnMatT[][];
+	private JTextField tfAtnS;
+	static int yBoundS = 85 ;
+	static int choiceAtnS =0;
+	static boolean atnMatS[][];
+	static int countUsnS =0;
 	/**
 	 * Launch the application.
 	 */
@@ -187,60 +199,41 @@ public class teachDashNew {
 		tabbedPane.addTab("Attendance(S)", atnSPan);
 		atnSPan.setLayout(null);
 
-		JScrollPane studentScrollAtn = new JScrollPane();
+		JScrollPane atnScrollS = new JScrollPane();
+		atnScrollS.setBounds(328, 57, 277, 243);
+		atnSPan.add(atnScrollS);
+		atnSPan.setVisible(false);
+		atnScrollS.setVisible(false);
+
+		JLabel lblStatusS = new JLabel("Status");
+		lblStatusS.setBounds(615, 59, 46, 14);
+		atnSPan.add(lblStatusS);
+
+		tfAtnS = new JTextField();
+		tfAtnS.setBounds(615, yBoundS, 31, 14);
+		atnSPan.add(tfAtnS);
+		tfAtnS.setColumns(10);
+
+		lblStatusS.setVisible(false);
+		tfAtnS.setVisible(false);
+
 
 		JButton btnCc1 = new JButton("ClassCode 1");
-		btnCc1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				studentScrollAtn.setVisible(true);
-			}
-		});
 		btnCc1.setBounds(198, 85, 104, 23);
 
 		JButton btnCc2 = new JButton("ClassCode 2");
-		btnCc2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				studentScrollAtn.setVisible(true);
-			}
-		});
 		btnCc2.setBounds(198, 114, 104, 23);
 
 		JButton btnCc3 = new JButton("ClassCode 3");
-		btnCc3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				studentScrollAtn.setVisible(true);
-			}
-		});
 		btnCc3.setBounds(198, 143, 104, 23);
 
 		JButton btnCc4 = new JButton("ClassCode 4");
-		btnCc4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				studentScrollAtn.setVisible(true);
-			}
-		});
 		btnCc4.setBounds(198, 176, 104, 23);
 
 		JButton btnCc5 = new JButton("ClassCode 5");
-		btnCc5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0)
-			{
-				studentScrollAtn.setVisible(true);
-			}
-		});
 		btnCc5.setBounds(198, 210, 104, 23);
 
 		JButton btnCc6 = new JButton("ClassCode6");
-		btnCc6.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				studentScrollAtn.setVisible(true);
-			}
-		});
 		btnCc6.setBounds(198, 244, 104, 23);
 
 		btnCc1.setVisible(false);
@@ -249,6 +242,7 @@ public class teachDashNew {
 		btnCc4.setVisible(false);
 		btnCc5.setVisible(false);
 		btnCc6.setVisible(false);
+
 
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
@@ -261,7 +255,11 @@ public class teachDashNew {
 				btnCc5.setVisible(false);
 				btnCc6.setVisible(false);
 				btnBack.setVisible(false);
-				studentScrollAtn.setVisible(false);
+				atnScrollS.setVisible(false);
+				atnTabS.setVisible(false);
+				lblStatusS.setVisible(false);
+				tfAtnS.setVisible(false);
+				countUsnS =0;
 			}
 		});
 		btnBack.setBounds(549, 311, 110, 50);
@@ -280,6 +278,7 @@ public class teachDashNew {
 		btnView.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
+				choiceAtnS = 1;
 				btnCc1.setVisible(true);
 				btnCc2.setVisible(true);
 				btnCc3.setVisible(true);
@@ -288,19 +287,35 @@ public class teachDashNew {
 				btnCc6.setVisible(true);
 
 				btnBack.setVisible(true);
+
+				String[] columnNamesS = {"ID","Name","Status"};
+				Object[][] dataS = {
+						{"Joel", "Hails","P"},	
+						{"John", "Doe","A"},
+						{"Sue", "well","P"},
+						{"Jane","White","A"},
+
+				};
+
+				atnTabS = new JTable(dataS,columnNamesS);
+				atnTabS.setBounds(400,70,300,260);
+				atnScrollS.setViewportView(atnTabS);
+
+				atnTabS.setVisible(false);
+				atnScrollS.setVisible(false);
+
+				lblStatusS.setVisible(false);
+				tfAtnS.setVisible(false);
 			}
 		});
 		btnView.setBounds(27, 85, 119, 50);
 
-		studentScrollAtn.setBounds(405, 31, 254, 269);
-		atnSPan.add(studentScrollAtn);
-		studentScrollAtn.setLayout(null);
-		studentScrollAtn.setVisible(false);
-
-		JButton btnUpdate_1 = new JButton("Update");
-		btnUpdate_1.addActionListener(new ActionListener() {
+		JButton btnMarkAtnS = new JButton("Mark");
+		btnMarkAtnS.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
+				choiceAtnS =2;
+
 				btnCc1.setVisible(true);
 				btnCc2.setVisible(true);
 				btnCc3.setVisible(true);
@@ -309,10 +324,298 @@ public class teachDashNew {
 				btnCc6.setVisible(true);
 
 				btnBack.setVisible(true);
+
+				String[] columnNamesS = {"ID","Name"};
+				Object[][] dataS = {
+						{"Joel", "Hails"},	
+						{"John", "Doe"},
+						{"Sue", "well"},
+						{"Jane","White"},
+
+				};
+
+				atnTabS = new JTable(dataS,columnNamesS);
+				atnTabS.setBounds(400,70,300,260);
+				atnScrollS.setViewportView(atnTabS);
+
+				atnTabS.setVisible(false);
+				atnScrollS.setVisible(false);
 			}
 		});
-		btnUpdate_1.setBounds(27, 176, 119, 50);
-		atnSPan.add(btnUpdate_1);
+		btnMarkAtnS.setBounds(27, 176, 119, 50);
+		atnSPan.add(btnMarkAtnS);
+
+
+
+		btnCc1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				atnScrollS.setVisible(true);
+				atnTabS.setVisible(true);	
+
+				if(choiceAtnS == 2)
+				{		
+					lblStatusS.setVisible(true);
+					tfAtnS.setVisible(true);
+
+					atnMatS = new boolean[4][1];
+
+					tfAtnS.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent cl)
+						{
+
+							if(tfAtnS.getText().toLowerCase().charAt(0)=='p')
+							{
+								boolean statusBool = true;
+								atnMatS[countUsnS][0] = statusBool;
+								countUsnS++;
+								yBoundS = yBoundS + 18;
+								tfAtnS.setBounds(615, yBoundS, 31, 14);
+								System.out.println(tfAtnS.getText());
+								tfAtnS.setText("");
+							}
+							else if(tfAtnS.getText().toLowerCase().charAt(0)=='a')
+							{
+								boolean statusBool = false;
+								atnMatS[countUsnS][0] = statusBool;
+								countUsnS++;
+								yBoundS = yBoundS + 18;
+								tfAtnS.setBounds(615, yBoundS, 31, 14);
+								System.out.println(tfAtnS.getText());
+								tfAtnS.setText("");
+							}
+							else 
+								System.out.println("Invalid Status");
+						}
+					});
+
+				}
+
+
+			}
+		});
+
+		btnCc2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				atnScrollS.setVisible(true);
+				atnTabS.setVisible(true);
+
+				if(choiceAtnS == 2)
+				{		
+					lblStatusS.setVisible(true);
+					tfAtnS.setVisible(true);
+
+					atnMatS = new boolean[4][1];
+
+					tfAtnS.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent cl)
+						{
+
+							if(tfAtnS.getText().toLowerCase().charAt(0)=='p')
+							{
+								boolean statusBool = true;
+								atnMatS[countUsnS][0] = statusBool;
+								countUsnS++;
+								yBoundS = yBoundS + 18;
+								tfAtnS.setBounds(615, yBoundS, 31, 14);
+								System.out.println(tfAtnS.getText());
+								tfAtnS.setText("");
+							}
+							else if(tfAtnS.getText().toLowerCase().charAt(0)=='a')
+							{
+								boolean statusBool = false;
+								atnMatS[countUsnS][0] = statusBool;
+								countUsnS++;
+								yBoundS = yBoundS + 18;
+								tfAtnS.setBounds(615, yBoundS, 31, 14);
+								System.out.println(tfAtnS.getText());
+								tfAtnS.setText("");
+							}
+							else 
+								System.out.println("Invalid Status");
+						}
+					});
+				}	
+			}		
+		});
+
+		btnCc3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				atnScrollS.setVisible(true);
+				atnTabS.setVisible(true);
+
+				if(choiceAtnS == 2)
+				{		
+					lblStatusS.setVisible(true);
+					tfAtnS.setVisible(true);
+					
+					atnMatS = new boolean[4][1];
+					
+					tfAtnS.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent cl)
+						{
+
+							if(tfAtnS.getText().toLowerCase().charAt(0)=='p')
+							{
+								boolean statusBool = true;
+								atnMatS[countUsnS][0] = statusBool;
+								countUsnS++;
+								yBoundS = yBoundS + 18;
+								tfAtnS.setBounds(615, yBoundS, 31, 14);
+								System.out.println(tfAtnS.getText());
+								tfAtnS.setText("");
+							}
+							else if(tfAtnS.getText().toLowerCase().charAt(0)=='a')
+							{
+								boolean statusBool = false;
+								atnMatS[countUsnS][0] = statusBool;
+								countUsnS++;
+								yBoundS = yBoundS + 18;
+								tfAtnS.setBounds(615, yBoundS, 31, 14);
+								System.out.println(tfAtnS.getText());
+								tfAtnS.setText("");
+							}
+							else 
+								System.out.println("Invalid Status");
+						}
+					});
+				}
+			}
+		});
+
+		btnCc4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				atnScrollS.setVisible(true);
+				atnTabS.setVisible(true);
+				if(choiceAtnS == 2)
+				{		
+					lblStatusS.setVisible(true);
+					tfAtnS.setVisible(true);
+					
+					atnMatS = new boolean[4][1];
+					
+					tfAtnS.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent cl)
+						{
+
+							if(tfAtnS.getText().toLowerCase().charAt(0)=='p')
+							{
+								boolean statusBool = true;
+								atnMatS[countUsnS][0] = statusBool;
+								countUsnS++;
+								yBoundS = yBoundS + 18;
+								tfAtnS.setBounds(615, yBoundS, 31, 14);
+								System.out.println(tfAtnS.getText());
+								tfAtnS.setText("");
+							}
+							else if(tfAtnS.getText().toLowerCase().charAt(0)=='a')
+							{
+								boolean statusBool = false;
+								atnMatS[countUsnS][0] = statusBool;
+								countUsnS++;
+								yBoundS = yBoundS + 18;
+								tfAtnS.setBounds(615, yBoundS, 31, 14);
+								System.out.println(tfAtnS.getText());
+								tfAtnS.setText("");
+							}
+							else 
+								System.out.println("Invalid Status");
+						}
+					});
+				}
+			}
+		});
+
+		btnCc5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				atnScrollS.setVisible(true);
+				atnTabS.setVisible(true);
+				if(choiceAtnS == 2)
+				{		
+					lblStatusS.setVisible(true);
+					tfAtnS.setVisible(true);
+					
+					atnMatS = new boolean[4][1];
+					
+					tfAtnS.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent cl)
+						{
+
+							if(tfAtnS.getText().toLowerCase().charAt(0)=='p')
+							{
+								boolean statusBool = true;
+								atnMatS[countUsnS][0] = statusBool;
+								countUsnS++;
+								yBoundS = yBoundS + 18;
+								tfAtnS.setBounds(615, yBoundS, 31, 14);
+								System.out.println(tfAtnS.getText());
+								tfAtnS.setText("");
+							}
+							else if(tfAtnS.getText().toLowerCase().charAt(0)=='a')
+							{
+								boolean statusBool = false;
+								atnMatS[countUsnS][0] = statusBool;
+								countUsnS++;
+								yBoundS = yBoundS + 18;
+								tfAtnS.setBounds(615, yBoundS, 31, 14);
+								System.out.println(tfAtnS.getText());
+								tfAtnS.setText("");
+							}
+							else 
+								System.out.println("Invalid Status");
+						}
+					});
+				}
+			}
+		});
+
+		btnCc6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				atnScrollS.setVisible(true);
+				atnTabS.setVisible(true);
+				if(choiceAtnS == 2)
+				{		
+					lblStatusS.setVisible(true);
+					tfAtnS.setVisible(true);
+					
+					atnMatS = new boolean[4][1];
+					
+					tfAtnS.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent cl)
+						{
+
+							if(tfAtnS.getText().toLowerCase().charAt(0)=='p')
+							{
+								boolean statusBool = true;
+								atnMatS[countUsnS][0] = statusBool;
+								countUsnS++;
+								yBoundS = yBoundS + 18;
+								tfAtnS.setBounds(615, yBoundS, 31, 14);
+								System.out.println(tfAtnS.getText());
+								tfAtnS.setText("");
+							}
+							else if(tfAtnS.getText().toLowerCase().charAt(0)=='a')
+							{
+								boolean statusBool = false;
+								atnMatS[countUsnS][0] = statusBool;
+								countUsnS++;
+								yBoundS = yBoundS + 18;
+								tfAtnS.setBounds(615, yBoundS, 31, 14);
+								System.out.println(tfAtnS.getText());
+								tfAtnS.setText("");
+							}
+							else 
+								System.out.println("Invalid Status");
+						}
+					});
+				}
+			}
+		});
 
 		JPanel marksPan = new JPanel();
 		tabbedPane.addTab("Marks", null, marksPan, null);
@@ -586,86 +889,193 @@ public class teachDashNew {
 		textFieldProctorId.setBounds(107, 339, 171, 23);
 		newSPan.add(textFieldProctorId);
 
-//		String desig = "OD";
-//		if(desig.equals("HOD"))
-//		{	
-			JPanel atnTPan = new JPanel();
-			tabbedPane.addTab("Attendacne(T)", null, atnTPan, null);
-			atnTPan.setLayout(null);
-			atnTPan.setVisible(false);
+		//		String desig = "OD";
+		//		if(desig.equals("HOD"))
+		//		{	
+		JPanel atnTPan = new JPanel();
+		tabbedPane.addTab("Attendacne(T)", null, atnTPan, null);
+		atnTPan.setLayout(null);
+		atnTPan.setVisible(false);
 
-			JButton btnViewAtnT = new JButton("View");
-			btnViewAtnT.setBounds(10, 82, 119, 50);
-			atnTPan.add(btnViewAtnT);
+		JScrollPane atnScrollT = new JScrollPane();
+		atnScrollT.setBounds(306, 32, 284, 267);
+		atnTPan.add(atnScrollT);
 
-			JButton btnUpdAtnT = new JButton("Update");
-			btnUpdAtnT.setBounds(10, 173, 119, 50);
-			atnTPan.add(btnUpdAtnT);
-
-			JButton btnBackTAtn = new JButton("Back");
-			btnBackTAtn.setBounds(508, 311, 110, 50);
-			atnTPan.add(btnBackTAtn);
+		JLabel lblTeacherStatus = new JLabel("Status");
+		lblTeacherStatus.setBounds(602, 32, 46, 14);
+		atnTPan.add(lblTeacherStatus);
 
 
-			JPanel newTPan = new JPanel();
-			tabbedPane.addTab("Add (t)", null, newTPan, null);
-			newTPan.setLayout(null);
+		tfAbPtT = new JTextField();
 
-			JLabel lblNameAddT = new JLabel("Name :");
-			lblNameAddT.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lblNameAddT.setBounds(10, 11, 90, 48);
-			newTPan.add(lblNameAddT);
+		tfAbPtT.setVisible(false);
+		lblTeacherStatus.setVisible(false);
+		atnScrollT.setVisible(false);
 
-			JLabel lblDobAddT = new JLabel("DOB :");
-			lblDobAddT.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lblDobAddT.setBounds(10, 70, 90, 48);
-			newTPan.add(lblDobAddT);
+		JButton btnNewAtnT = new JButton("Mark");
+		btnNewAtnT.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
 
-			JLabel lblEmailAddT = new JLabel("Email :");
-			lblEmailAddT.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lblEmailAddT.setBounds(10, 129, 90, 48);
-			newTPan.add(lblEmailAddT);
+				String[] columnNames = {"ID","Name"};
+				Object[][] data = {
+						{"Joel", "Hails"},	
+						{"John", "Doe"},
+						{"Sue", "well"},
+						{"Jane","White"},
 
-			JLabel lblDateOfJoinAddT = new JLabel("Date Of Join :");
-			lblDateOfJoinAddT.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lblDateOfJoinAddT.setBounds(10, 188, 133, 48);
-			newTPan.add(lblDateOfJoinAddT);
+				};
+				atnMatT = new boolean[4][1];
+				JTable atnTTab=new JTable(data,columnNames);
+				atnTTab.setBounds(100,100,100,100);	
+				atnScrollT.setViewportView(atnTTab);
 
-			JLabel lblPhoneAddT = new JLabel("Phone :");
-			lblPhoneAddT.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			lblPhoneAddT.setBounds(10, 247, 133, 48);
-			newTPan.add(lblPhoneAddT);
 
-			textFieldNameAddT = new JTextField();
-			textFieldNameAddT.setBounds(179, 29, 191, 20);
-			newTPan.add(textFieldNameAddT);
-			textFieldNameAddT.setColumns(10);
+				tfAbPtT.setBounds(599, yBoundT, 46, 14);
 
-			textFieldDobAddT = new JTextField();
-			textFieldDobAddT.setColumns(10);
-			textFieldDobAddT.setBounds(179, 88, 191, 20);
-			newTPan.add(textFieldDobAddT);
+				atnTPan.add(tfAbPtT);
+				tfAbPtT.setColumns(10);
 
-			textFieldEmailAddT = new JTextField();
-			textFieldEmailAddT.setColumns(10);
-			textFieldEmailAddT.setBounds(179, 147, 191, 20);
-			newTPan.add(textFieldEmailAddT);
+				atnScrollT.setVisible(true);
+				atnTTab.setVisible(true);
+				lblTeacherStatus.setVisible(true);
+				tfAbPtT.setVisible(true);
 
-			textFieldDojAddT = new JTextField();
-			textFieldDojAddT.setColumns(10);
-			textFieldDojAddT.setBounds(179, 206, 191, 20);
-			newTPan.add(textFieldDojAddT);
+				tfAbPtT.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent cl)
+					{
 
-			textFieldPhoneAddT = new JTextField();
-			textFieldPhoneAddT.setColumns(10);
-			textFieldPhoneAddT.setBounds(179, 265, 191, 20);
-			newTPan.add(textFieldPhoneAddT);
+						if(tfAbPtT.getText().toLowerCase().charAt(0)=='p')
+						{
+							boolean statusBool = true;
+							atnMatT[countIdT][0] = statusBool;
+							countIdT++;
+							yBoundT = yBoundT + 18;
+							tfAbPtT.setBounds(599, yBoundT, 46, 14);
+							System.out.println(tfAbPtT.getText());
+							tfAbPtT.setText("");
+						}
+						else if(tfAbPtT.getText().toLowerCase().charAt(0)=='a')
+						{
+							boolean statusBool = false;
+							atnMatT[countIdT][0] = statusBool;
+							countIdT++;
+							yBoundT = yBoundT + 18;
+							tfAbPtT.setBounds(599, yBoundT, 46, 14);
+							System.out.println(tfAbPtT.getText());
+							tfAbPtT.setText("");
+						}
+						else 
+							System.out.println("Invalid Status");
+					}
+				});
+			}
+		});
 
-			JButton btnSubmitAddT = new JButton("Submit");
-			btnSubmitAddT.setBounds(277, 326, 118, 35);
-			newTPan.add(btnSubmitAddT);
+		JButton btnViewAtnT = new JButton("View");
+		btnViewAtnT.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				tfAbPtT.setVisible(false);
+				lblTeacherStatus.setVisible(false);
 
-//		}
+				String[] columnNames = {"ID","Name","Status"};
+				Object[][] data = {
+						{"Joel", "Hails","P"},	
+						{"John", "Doe","A"},
+						{"Sue", "well","P"},
+						{"Jane","White","A"},
+
+				};
+
+				JTable atnTTab=new JTable(data,columnNames);
+				atnTTab.setBounds(100,100,100,100);	
+				atnScrollT.setViewportView(atnTTab);
+
+				atnScrollT.setVisible(true);
+				atnTTab.setVisible(true);
+			}
+		});
+
+
+		JButton btnBackTAtn = new JButton("Back");
+		btnBackTAtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				atnScrollT.setVisible(false);
+				atnScrollT.setVisible(false);
+				lblTeacherStatus.setVisible(false);
+				tfAbPtT.setVisible(false);
+				countIdT =0;
+			}
+		});
+		btnBackTAtn.setBounds(508, 311, 110, 50);
+		atnTPan.add(btnBackTAtn);
+
+		btnNewAtnT.setBounds(10, 173, 119, 50);
+		atnTPan.add(btnNewAtnT);
+		btnViewAtnT.setBounds(10, 82, 119, 50);
+		atnTPan.add(btnViewAtnT);
+
+		JPanel newTPan = new JPanel();
+		tabbedPane.addTab("Add (t)", null, newTPan, null);
+		newTPan.setLayout(null);
+
+		JLabel lblNameAddT = new JLabel("Name :");
+		lblNameAddT.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNameAddT.setBounds(10, 11, 90, 48);
+		newTPan.add(lblNameAddT);
+
+		JLabel lblDobAddT = new JLabel("DOB :");
+		lblDobAddT.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblDobAddT.setBounds(10, 70, 90, 48);
+		newTPan.add(lblDobAddT);
+
+		JLabel lblEmailAddT = new JLabel("Email :");
+		lblEmailAddT.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblEmailAddT.setBounds(10, 129, 90, 48);
+		newTPan.add(lblEmailAddT);
+
+		JLabel lblDateOfJoinAddT = new JLabel("Date Of Join :");
+		lblDateOfJoinAddT.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblDateOfJoinAddT.setBounds(10, 188, 133, 48);
+		newTPan.add(lblDateOfJoinAddT);
+
+		JLabel lblPhoneAddT = new JLabel("Phone :");
+		lblPhoneAddT.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblPhoneAddT.setBounds(10, 247, 133, 48);
+		newTPan.add(lblPhoneAddT);
+
+		textFieldNameAddT = new JTextField();
+		textFieldNameAddT.setBounds(179, 29, 191, 20);
+		newTPan.add(textFieldNameAddT);
+		textFieldNameAddT.setColumns(10);
+
+		textFieldDobAddT = new JTextField();
+		textFieldDobAddT.setColumns(10);
+		textFieldDobAddT.setBounds(179, 88, 191, 20);
+		newTPan.add(textFieldDobAddT);
+
+		textFieldEmailAddT = new JTextField();
+		textFieldEmailAddT.setColumns(10);
+		textFieldEmailAddT.setBounds(179, 147, 191, 20);
+		newTPan.add(textFieldEmailAddT);
+
+		textFieldDojAddT = new JTextField();
+		textFieldDojAddT.setColumns(10);
+		textFieldDojAddT.setBounds(179, 206, 191, 20);
+		newTPan.add(textFieldDojAddT);
+
+		textFieldPhoneAddT = new JTextField();
+		textFieldPhoneAddT.setColumns(10);
+		textFieldPhoneAddT.setBounds(179, 265, 191, 20);
+		newTPan.add(textFieldPhoneAddT);
+
+		JButton btnSubmitAddT = new JButton("Submit");
+		btnSubmitAddT.setBounds(277, 326, 118, 35);
+		newTPan.add(btnSubmitAddT);
+
+		//		}
 
 		JPanel passwordPan = new JPanel();
 		tabbedPane.addTab("Change Password", null, passwordPan, null);
