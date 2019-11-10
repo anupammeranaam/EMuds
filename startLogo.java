@@ -66,7 +66,7 @@ public class startLogo {
 		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Anupam Mishra\\Pictures\\emuds2.png"));
 		lblNewLabel.setBounds(0, 0, 500, 500);
 		frame.getContentPane().add(lblNewLabel);
-	
+		frame.setUndecorated(true);
 	
 	}
 }
