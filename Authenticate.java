@@ -1,17 +1,21 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Timer;
 import java.awt.*;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
+
 import java.awt.event.*;
+
 import javax.swing.*;
+
 import java.awt.*;
 
 public class Authenticate extends JFrame {
@@ -25,7 +29,8 @@ public class Authenticate extends JFrame {
 	String text = "Hello";
 	JLabel label;
 	int charIndex = 0;;
-
+	int counter=0;
+	int counter2=0;
 	private JTextField tfUsername;
 	private JPasswordField pfPassword;
 	private JLabel lbUsername;
@@ -34,6 +39,10 @@ public class Authenticate extends JFrame {
 	private JButton btnCancel;
 	private boolean succeeded;
 	static Authenticate frame; 
+	private JTextField idf;
+	private JPasswordField passf;
+	int counterteacher=0;
+	int counterstudent=0;
 	/**
 	 * Launch the application.
 	 */
@@ -45,6 +54,7 @@ public class Authenticate extends JFrame {
 					frame = new Authenticate();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null); 
+					frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -60,7 +70,7 @@ public class Authenticate extends JFrame {
 		setBounds(100, 100, 1334, 692);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(null);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		JLabel lblNewLabel = new JLabel("");
@@ -74,55 +84,196 @@ public class Authenticate extends JFrame {
 		lblEmuds.setBounds(31, 33, 179, 57);
 		contentPane.add(lblEmuds);
 
+
+		JLabel lblId = new JLabel("ID");
+		lblId.setBounds(247, 293, 46, 14);
+		contentPane.add(lblId);
+
+		idf = new JTextField();
+		idf.setBounds(303, 287, 104, 20);
+		contentPane.add(idf);
+		idf.setColumns(10);
+		
+				passf = new JPasswordField();
+				passf.setBounds(303, 355, 104, 20);
+				contentPane.add(passf);
+				passf.setVisible(false);
+
+		JLabel lblpass = new JLabel("Passowrd");
+		lblpass.setBounds(227, 358, 66, 14);
+		contentPane.add(lblpass);
+
+		JLabel lblLogin_1 = new JLabel("Login");
+		lblLogin_1.setFont(new Font("Poor Richard", Font.PLAIN, 25));
+		lblLogin_1.setBounds(303, 220, 104, 31);
+		contentPane.add(lblLogin_1);
 		JLabel lblIAm = new JLabel("I AM");
 		lblIAm.setFont(new Font("Snap ITC", Font.PLAIN, 55));
 		lblIAm.setBounds(595, 164, 212, 71);
 		contentPane.add(lblIAm);
 
+
+		lblId.setVisible(false);
+		lblpass.setVisible(false);
+		idf.setVisible(false);
+		lblLogin_1.setVisible(false);
+
+
+		JPanel panelteacher = new JPanel();
+		contentPane.add(panelteacher);
+		panelteacher.setSize(400,350);
+		panelteacher.setBounds(165, 175, 352, 316);
+		panelteacher.setLayout(null);
+
+		JButton btnLogin_1 = new JButton("LoginT");
+		
+		btnLogin_1.setBounds(146, 239, 72, 23);
+		panelteacher.add(btnLogin_1);
+
+		btnLogin_1.setOpaque(false);
+		btnLogin_1.setForeground(Color.GREEN);
+		btnLogin_1.setBackground(Color.PINK);
+		btnLogin_1.setIcon(null);
+
+		JLabel epass = new JLabel("Enter ID and Password");
+		epass.setForeground(Color.RED);
+		epass.setBounds(130, 291, 131, 14);
+		JLabel epass2 = new JLabel("Enter ID and Password");
+		epass2.setForeground(Color.RED);
+		epass2.setBounds(130, 291, 135, 14);
+		panelteacher.add(epass);
+
+		btnLogin_1.setVisible(false);
+		epass.setVisible(false);
+		panelteacher.setVisible(false);
+		JPanel panelstudent = new JPanel();
+		contentPane.add(panelstudent);
+		panelstudent .setSize(400,350);
+		panelstudent .setBounds(165, 175, 352, 316);
+
+		panelstudent.setLayout(null);
+
+		panelstudent .setVisible(false);
+		JButton btnLogin_2 = new JButton("LoginS");
+		btnLogin_2.setBounds(146, 239, 80, 23);
+		panelstudent.add(btnLogin_2);
+		panelstudent.add(epass2);
+		btnLogin_2.setOpaque(false);
+		btnLogin_2.setForeground(Color.GREEN);
+		btnLogin_2.setBackground(Color.PINK);
+		btnLogin_2.setIcon(null);
+		btnLogin_2.setVisible(false);
+
 		JButton btnTeacher = new JButton("Teacher");
 		btnTeacher.addActionListener(new ActionListener() {
+
+			int counter=0;	
 			public void actionPerformed(ActionEvent arg0) {
+				epass.setVisible(false);
+				counter++;
+				idf.setText("");
+				passf.setText("");
+				if(counter%2!=0)
+				{
 
-				contentPane2 = new JPanel();
-				contentPane2.setBackground(Color.WHITE);
-				contentPane2.setBorder(new EmptyBorder(5, 5, 5, 5));
-				setContentPane(contentPane2);
-				contentPane2.setLayout(null);
-				JFrame frame1 = new JFrame("Login Form");
-				frame1.setLocationRelativeTo(btnTeacher); 
+					//panel.setBackground(new Color(0,0,0,60));
+					panelteacher.setVisible(true);
+					JLabel lblLogin = new JLabel("Login(Teacher)");
+					lblLogin.setForeground(new Color(204, 51, 51));
+					lblLogin.setFont(new Font("Tahoma", Font.BOLD, 30));
+					lblLogin.setBounds(290, 160, 137, 61);
+					contentPane.add(lblLogin);
+					lblLogin.setVisible(false);
 
-				l1 = new JLabel("Login Form");
-				l1.setForeground(Color.blue);
-				l1.setFont(new Font("Serif", Font.BOLD, 20));	
-				l2 = new JLabel("Username");
-				l3 = new JLabel("Passwordss");
-				tf1 = new JTextField();
-				p1 = new JPasswordField();
-				btn1 = new JButton("Login");
+					lblId.setVisible(true);
+					lblpass.setVisible(true);
+					idf.setVisible(true);
+					passf.setVisible(true);
+					lblLogin_1.setVisible(true);
+					btnLogin_1.setVisible(true);
+					btnLogin_2.setVisible(false);
+					JLabel lblNewLabel = new JLabel(" ");
+					lblNewLabel.setForeground(new Color(128, 0, 0));
+					lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 35));
+					lblNewLabel.setBounds(10, 11, 399, 61);
+					contentPane.add(lblNewLabel);
+				}
+				else
+				{
 
-				l1.setBounds(147, 11, 151, 30);
-				l2.setBounds(80, 70, 200, 30);
-				l3.setBounds(80, 110, 80, 30);
-				tf1.setBounds(174, 71, 200, 30);
-				p1.setBounds(174, 110, 200, 30);
-				btn1.setBounds(147, 212, 100, 30);
+					//panel.getContentPane().setBackground(Color.red);
+					panelteacher.setVisible(false);
+					lblId.setVisible(false);
+					panelstudent.setVisible(false);
+					lblpass.setVisible(false);
+					idf.setVisible(false);
+					passf.setVisible(false);
+					lblLogin_1.setVisible(false);
+					btnLogin_1.setVisible(false);
+					btnLogin_2.setVisible(false);
 
-				frame1.add(l1);
-				frame1.add(l2);
-				frame1.add(tf1);
-				frame1.add(l3);
-				frame1.add(p1);
-				frame1.add(btn1);
+				}
 
-				frame1.setSize(400, 400);
-				frame1.getContentPane().setLayout(null);
-				frame1.setBounds(500,200,100,100);
-				JLabel lblNewLabel_12 = new JLabel("New label");
-				lblNewLabel_12.setIcon(new ImageIcon("C:\\Users\\Reetik\\Downloads\\background-3246124_1280.jpg"));
-				lblNewLabel_12.setBounds(0, 0, 384, 361);
-				frame1.getContentPane().add(lblNewLabel_12);
-				frame1.setSize(400,400);
-				frame1.setVisible(true);
+				btnLogin_1.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+
+						epass.setVisible(false);
+						if(idf.getText().equals("")||passf.getText().equals(""))
+						{
+							epass.setVisible(true);
+
+						}
+						else
+
+						{
+
+							try {
+								epass2.setVisible(false);
+								Class.forName("com.mysql.jdbc.Driver");
+								//("Driver loaded successfully");
+								Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/emudsf?useTimezone=true&serverTimezone=UTC","root","");
+								Statement stmt=con.createStatement();
+								
+								ResultSet rs=stmt.executeQuery("select * from teacher where teacher_id='"+idf.getText()+"'and (password='"+passf.getText()+"')");
+
+
+								int j=0;
+								while(rs.next())
+								{
+									counterteacher++;
+
+
+									teachDashNew obj=new teachDashNew(idf.getText(),passf.getText());
+									obj.main(idf.getText(),passf.getText());
+									frame.setVisible(false);
+
+								}
+
+								if(counterteacher==0)
+									JOptionPane.showMessageDialog(null," Username or Password Incorrect");
+
+
+							}
+							catch(Exception ee)
+							{
+								JOptionPane.showMessageDialog(null, ee.getMessage());
+							}
+
+
+						}}
+
+
+				});
+
+
+
+
+
+
+
+				btnLogin.setBackground(new Color(0, 139, 139));
+				btnLogin.setBounds(1036, 478, 109, 40);
+				contentPane.add(btnLogin);
 
 			}
 		});
@@ -132,21 +283,129 @@ public class Authenticate extends JFrame {
 		contentPane.add(btnTeacher);
 
 		JButton btnStudent = new JButton("Student");
+
+		btnStudent.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				epass2.setVisible(false);
+				counter2++;
+				idf.setText("");
+				passf.setText("");
+				if(counter2%2!=0)
+				{
+
+					//panel.setBackground(new Color(0,0,0,60));
+					panelstudent.setVisible(true);
+					panelteacher.setVisible(false);
+					JLabel lblLogin = new JLabel("Login");
+					lblLogin.setForeground(new Color(204, 51, 51));
+					lblLogin.setFont(new Font("Tahoma", Font.BOLD, 30));
+					lblLogin.setBounds(290, 160, 137, 61);
+					contentPane.add(lblLogin);
+					lblLogin.setVisible(false);
+
+					lblId.setVisible(true);
+					lblpass.setVisible(true);
+					idf.setVisible(true);
+					passf.setVisible(true);
+					lblLogin_1.setVisible(true);
+					btnLogin_2.setVisible(true);
+					btnLogin_1.setVisible(false);
+					JLabel lblNewLabel = new JLabel(" ");
+					lblNewLabel.setForeground(new Color(128, 0, 0));
+					lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 35));
+					lblNewLabel.setBounds(10, 11, 399, 61);
+					contentPane.add(lblNewLabel);
+
+
+					btnLogin_2.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+
+
+
+							if(idf.getText().equals("")||passf.getText().equals(""))
+							{
+								epass2.setVisible(true);
+
+							}
+							else
+
+							{
+								try {
+									epass2.setVisible(false);
+									Class.forName("com.mysql.jdbc.Driver");
+									//("Driver loaded successfully");
+									Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/emudsf?useTimezone=true&serverTimezone=UTC","root","");
+									Statement stmt=con.createStatement();
+
+									ResultSet rs=stmt.executeQuery("select * from student where usn='"+idf.getText()+"'and (student.Password='"+passf.getText()+"')");
+
+
+									while(rs.next())
+									{
+										counterstudent++;
+
+
+																		 StudentDashNew obj=new StudentDashNew(idf.getText(),passf.getText());
+																		 obj.main(idf.getText(),passf.getText());
+																			
+																		 frame.setVisible(false);		
+									}
+
+									if(counterstudent==0)
+										JOptionPane.showMessageDialog(null," Username or Password Incorrect");
+
+
+							
+								}
+								catch(Exception ee)
+								{
+									//(" "+ee.getMessage());
+								}
+
+							}
+						}
+
+
+					});
+
+				}
+				else
+				{
+
+					//panel.getContentPane().setBackground(Color.red);
+					panelstudent.setVisible(false);
+					panelteacher.setVisible(false);
+					lblId.setVisible(false);
+					lblpass.setVisible(false);
+					idf.setVisible(false);
+					passf.setVisible(false);
+					lblLogin_1.setVisible(false);
+					btnLogin_2.setVisible(false);
+					btnLogin_1.setVisible(false);
+
+				}
+
+
+			}
+		});
 		btnStudent.setBackground(new Color(51, 204, 204));
 		btnStudent.setBounds(572, 427, 201, 42);
 		contentPane.add(btnStudent);
+
+
 		btnTeacher.addMouseListener(new MouseAdapter() {
 			Color oldcolor = btnTeacher.getBackground();
 			Color oldcolor1 = btnTeacher.getForeground();
 			public void mouseEntered(MouseEvent me) {
 				oldcolor = btnTeacher.getBackground();
 				btnTeacher.setBackground(Color.white);
-				//	           oldcolor1 = btnTeacher.getForeground();
-				//	           btnTeacher.setForeground(Color.cyan);
+				//	            oldcolor1 = btnTeacher.getForeground();
+				//	            btnTeacher.setForeground(Color.cyan);
 			}
 			public void mouseExited(MouseEvent me) {
 				btnTeacher.setBackground(oldcolor);
-				//	       	btnTeacher.setForeground(oldcolor1);
+				//	        	 btnTeacher.setForeground(oldcolor1);
 			}
 		});
 		btnStudent.addMouseListener(new MouseAdapter() {
