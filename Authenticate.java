@@ -43,6 +43,8 @@ public class Authenticate extends JFrame {
 	private JPasswordField passf;
 	int counterteacher=0;
 	int counterstudent=0;
+	private JTextField tfAdminId;
+	private JPasswordField pfAdminPass;
 	/**
 	 * Launch the application.
 	 */
@@ -93,11 +95,11 @@ public class Authenticate extends JFrame {
 		idf.setBounds(303, 287, 104, 20);
 		contentPane.add(idf);
 		idf.setColumns(10);
-		
-				passf = new JPasswordField();
-				passf.setBounds(303, 355, 104, 20);
-				contentPane.add(passf);
-				passf.setVisible(false);
+
+		passf = new JPasswordField();
+		passf.setBounds(303, 355, 104, 20);
+		contentPane.add(passf);
+		passf.setVisible(false);
 
 		JLabel lblpass = new JLabel("Passowrd");
 		lblpass.setBounds(227, 358, 66, 14);
@@ -126,7 +128,7 @@ public class Authenticate extends JFrame {
 		panelteacher.setLayout(null);
 
 		JButton btnLogin_1 = new JButton("LoginT");
-		
+
 		btnLogin_1.setBounds(146, 239, 72, 23);
 		panelteacher.add(btnLogin_1);
 
@@ -165,8 +167,8 @@ public class Authenticate extends JFrame {
 		btnLogin_2.setVisible(false);
 
 		JButton btnTeacher = new JButton("Teacher");
-		btnTeacher.addActionListener(new ActionListener() {
-
+		btnTeacher.addActionListener(new ActionListener() 
+		{
 			int counter=0;	
 			public void actionPerformed(ActionEvent arg0) {
 				epass.setVisible(false);
@@ -233,7 +235,7 @@ public class Authenticate extends JFrame {
 								//("Driver loaded successfully");
 								Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/emudsf?useTimezone=true&serverTimezone=UTC","root","");
 								Statement stmt=con.createStatement();
-								
+
 								ResultSet rs=stmt.executeQuery("select * from teacher where teacher_id='"+idf.getText()+"'and (password='"+passf.getText()+"')");
 
 
@@ -264,12 +266,6 @@ public class Authenticate extends JFrame {
 
 
 				});
-
-
-
-
-
-
 
 				btnLogin.setBackground(new Color(0, 139, 139));
 				btnLogin.setBounds(1036, 478, 109, 40);
@@ -319,10 +315,8 @@ public class Authenticate extends JFrame {
 
 
 					btnLogin_2.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-
-
-
+						public void actionPerformed(ActionEvent e)
+						{
 							if(idf.getText().equals("")||passf.getText().equals(""))
 							{
 								epass2.setVisible(true);
@@ -346,17 +340,15 @@ public class Authenticate extends JFrame {
 										counterstudent++;
 
 
-																		 StudentDashNew obj=new StudentDashNew(idf.getText(),passf.getText());
-																		 obj.main(idf.getText(),passf.getText());
-																			
-																		 frame.setVisible(false);		
+										StudentDashNew obj=new StudentDashNew(idf.getText(),passf.getText());
+										obj.main(idf.getText(),passf.getText());
+
+										frame.setVisible(false);		
 									}
 
 									if(counterstudent==0)
 										JOptionPane.showMessageDialog(null," Username or Password Incorrect");
 
-
-							
 								}
 								catch(Exception ee)
 								{
@@ -392,6 +384,23 @@ public class Authenticate extends JFrame {
 		btnStudent.setBackground(new Color(51, 204, 204));
 		btnStudent.setBounds(572, 427, 201, 42);
 		contentPane.add(btnStudent);
+		
+		JLabel lblAdminId = new JLabel("ID :");
+		lblAdminId.setBounds(102, 101, 46, 14);
+		contentPane.add(lblAdminId);
+		
+		JLabel lbl = new JLabel("Password :");
+		lbl.setBounds(102, 126, 66, 14);
+		contentPane.add(lbl);
+		
+		tfAdminId = new JTextField();
+		tfAdminId.setBounds(165, 98, 86, 20);
+		contentPane.add(tfAdminId);
+		tfAdminId.setColumns(10);
+		
+		pfAdminPass = new JPasswordField();
+		pfAdminPass.setBounds(165, 123, 86, 20);
+		contentPane.add(pfAdminPass);
 
 
 		btnTeacher.addMouseListener(new MouseAdapter() {
@@ -418,7 +427,8 @@ public class Authenticate extends JFrame {
 				btnStudent.setBackground(oldcolor);
 			}
 		});
-
+		
+		
 
 
 	}
