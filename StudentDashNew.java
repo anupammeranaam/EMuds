@@ -718,7 +718,7 @@ public class StudentDashNew {
 				modelFacDetail.addRow(new Object [] {rsTeach2.getString(1) ,rsTeach2.getString(2) ,rsTeach2.getString(3) ,rsTeach2.getString(4)});
 			}
 
-			ResultSet rsTeach3 = stmt.executeQuery("select subjectteachid ,name ,phoneno ,email from teacher where subjectteachid = '"+subjectName[0]+"' and branch_id = '"+branchId+"'  ");
+			ResultSet rsTeach3 = stmt.executeQuery("select subjectteachid ,name ,phoneno ,email from teacher where subjectteachid = '"+subjectName[2]+"' and branch_id = '"+branchId+"'  ");
 
 			while(rsTeach3.next())
 			{
