@@ -1,3 +1,4 @@
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -229,10 +230,10 @@ public class Authenticate extends JFrame {
 
 						{
 
-							try {
+							try
+							{
 								epass2.setVisible(false);
 								Class.forName("com.mysql.jdbc.Driver");
-								//("Driver loaded successfully");
 								Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/emudsf?useTimezone=true&serverTimezone=UTC","root","");
 								Statement stmt=con.createStatement();
 
@@ -327,7 +328,8 @@ public class Authenticate extends JFrame {
 							{
 								try {
 									epass2.setVisible(false);
-									Class.forName("com.mysql.jdbc.Driver");
+//									Class.forName("com.mysql.jdbc.Driver");
+									Class.forName("com.mysql.cj.jdbc.Driver");
 									//("Driver loaded successfully");
 									Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/emudsf?useTimezone=true&serverTimezone=UTC","root","");
 									Statement stmt=con.createStatement();
@@ -384,23 +386,91 @@ public class Authenticate extends JFrame {
 		btnStudent.setBackground(new Color(51, 204, 204));
 		btnStudent.setBounds(572, 427, 201, 42);
 		contentPane.add(btnStudent);
+
+		JButton btnAdmin = new JButton("");
 		
-		JLabel lblAdminId = new JLabel("ID :");
-		lblAdminId.setBounds(102, 101, 46, 14);
-		contentPane.add(lblAdminId);
+		btnAdmin.setOpaque(false);
+		btnAdmin.setContentAreaFilled(false);
+		btnAdmin.setBorderPainted(false);
+		btnAdmin.setForeground(null);
 		
-		JLabel lbl = new JLabel("Password :");
-		lbl.setBounds(102, 126, 66, 14);
-		contentPane.add(lbl);
-		
-		tfAdminId = new JTextField();
-		tfAdminId.setBounds(165, 98, 86, 20);
-		contentPane.add(tfAdminId);
-		tfAdminId.setColumns(10);
-		
-		pfAdminPass = new JPasswordField();
-		pfAdminPass.setBounds(165, 123, 86, 20);
-		contentPane.add(pfAdminPass);
+		btnAdmin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				JPanel adminPan = new JPanel(new BorderLayout(5, 5));
+
+				JPanel label = new JPanel(new GridLayout(0, 1, 2, 2));
+
+				label.add(new JLabel("ID:", SwingConstants.RIGHT));
+				label.add(new JLabel("Password:", SwingConstants.RIGHT));
+				adminPan.add(label, BorderLayout.WEST);
+
+				JPanel controls = new JPanel(new GridLayout(0, 1, 2, 2));
+				JTextField tfId = new JTextField();
+				controls.add(tfId);
+
+				JPasswordField pfAdminPass = new JPasswordField();
+				controls.add(pfAdminPass);
+				adminPan.add(controls, BorderLayout.CENTER);
+
+				String options [] = {"Ok" , "Cancel"}; 
+				int option = JOptionPane.showOptionDialog(null,adminPan, "Admin Login",
+								JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+								null, options, options[1]);
+				if(option == 0)
+				{
+					if(tfId.getText().equals("") || pfAdminPass.getText().equals("") )
+					{
+						JOptionPane.showMessageDialog(null, "1 or Both Field Empty");
+					}
+					else
+					{
+						try
+						{
+							Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/emudsf?useTimezone=true&serverTimezone=UTC","root","");
+							Statement stmt=con.createStatement();
+
+							ResultSet rs =stmt.executeQuery("select password , name from admin where id = '"+tfId.getText()+"' ");
+							
+							String adminPassDb = "" ;
+							String adminNameDb = "";
+							while(rs.next())
+							{
+								adminPassDb = rs.getString(1);
+								adminNameDb = rs.getString(2);
+							}
+							
+							if(pfAdminPass.getText().equals(adminPassDb))
+							{
+								JOptionPane.showMessageDialog(null, "Welcome "+adminNameDb);
+								adminDash adminDashObj = new adminDash(Integer.parseInt(tfId.getText()),adminNameDb);
+								adminDashObj.main(Integer.parseInt(tfId.getText()),adminNameDb);
+								frame.setVisible(false);
+								
+							
+							}
+							else
+							{
+								JOptionPane.showMessageDialog(null, "Wrong Password");
+							}
+						}
+						catch(Exception E)
+						{
+							JOptionPane.showMessageDialog(null, E.getMessage());
+						}
+					}
+				}
+
+
+			}
+		});
+		btnAdmin.setForeground(Color.WHITE);
+		btnAdmin.setBackground(Color.WHITE);
+		btnAdmin.setBounds(10, 11, 168, 89);
+		contentPane.add(btnAdmin);
+
+
+
 
 
 		btnTeacher.addMouseListener(new MouseAdapter() {
@@ -427,8 +497,8 @@ public class Authenticate extends JFrame {
 				btnStudent.setBackground(oldcolor);
 			}
 		});
-		
-		
+
+
 
 
 	}
